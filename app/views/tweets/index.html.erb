@@ -2,7 +2,7 @@
     <div class="header">
         <div class="header__top">
             <div class="header__top__button">
-                <h2 class="header__top__title">sample SNS</h2>
+                <%= link_to "sample SNS", root_path, class: "header__top__title" %>
                 <%= link_to "アカウント作成", new_user_registration_path, class: "button signup" %>
                 <%= link_to "ログイン", new_user_session_path, class: "button login"%>
             </div>
@@ -29,17 +29,17 @@
                           <image>画
                           </image>
                           <strong class="username">
-                            kuwabara
+                            ユーザー名
                           </strong>
                         </a>
-                        <small class="time">２月７日
+                        <small class="time">日付
                         </small>
                       </div>
                       <div class="main__timeline__contents__text">
-                        テキストテキストテキスト
+                        テキスト
                       </div>
                       <div class="main__timeline__contents__action">
-                        アクション 返信　いいね
+                         返信　いいね
                       </div>
                 </div>
                 <div class="main__timeline__contents sample2">

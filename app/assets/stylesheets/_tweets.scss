@@ -4,7 +4,8 @@
     font-size: 14px;
     line-height: 18px;
     overflow-y: scroll;
-    height: 900px;
+    height: 100%;
+    min-height: 1230px;
     width: 100%;
     display: block;
 }
@@ -49,14 +50,14 @@
 
 .header__top {
     background-color: #afa1a1;
-    height: 80px;
+    height: 75px;
     position: relative;
 }
 
 .header__top__button {
     color: #fff;
     margin: 0 auto;
-    padding-top: 20px;
+    padding-top: 15px;
     text-align: right;
     width: 95%;
     min-width: 650px;
@@ -83,7 +84,8 @@
     font-weight: 400;
     line-height: 48px;
     margin-bottom: -5px;
-    font-size: 48px;
+    font-size: 40px;
+    text-decoration: none;
     display: inline-block;
     float: left;
 }
