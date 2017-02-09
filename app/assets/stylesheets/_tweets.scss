@@ -4,9 +4,18 @@
     font-size: 14px;
     line-height: 18px;
     overflow-y: scroll;
-    height: 900px;
+    height: 100%;
+    min-height: 1230px;
     width: 100%;
     display: block;
+}
+
+.alert, .notice {
+    text-align: center;
+    line-height: 1.5;
+    background: #fff;
+    font-size: 18px;
+
 }
 
 .button {
@@ -49,20 +58,20 @@
 
 .header__top {
     background-color: #afa1a1;
-    height: 80px;
+    height: 75px;
     position: relative;
 }
 
 .header__top__button {
     color: #fff;
     margin: 0 auto;
-    padding-top: 20px;
+    padding-top: 15px;
     text-align: right;
     width: 95%;
     min-width: 650px;
 }
 
-.signup, .login {
+.signup, .login, .logout, .mypage {
     border-radius: 5px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     font-size: 16px;
@@ -71,7 +80,7 @@
     margin-left: 8px;
 }
 
-.signup:hover, .login:hover{
+.signup:hover, .login:hover, .logout:hover, .mypage:hover {
   background: #fff;
   color: #afa1a1;
 }
@@ -83,7 +92,8 @@
     font-weight: 400;
     line-height: 48px;
     margin-bottom: -5px;
-    font-size: 48px;
+    font-size: 40px;
+    text-decoration: none;
     display: inline-block;
     float: left;
 }
