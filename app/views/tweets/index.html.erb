@@ -3,8 +3,13 @@
         <div class="header__top">
             <div class="header__top__button">
                 <%= link_to "sample SNS", root_path, class: "header__top__title" %>
+                <% if user_signed_in? %>
+                <a class="button mypage", href="/users/<%= current_user.id %>">マイページ</a>
+                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "button logout" %>
+                <% else %>
                 <%= link_to "アカウント作成", new_user_registration_path, class: "button signup" %>
                 <%= link_to "ログイン", new_user_session_path, class: "button login"%>
+                <% end %>
             </div>
         </div>
         <div class="header__search">
