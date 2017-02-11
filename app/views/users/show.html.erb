@@ -4,5 +4,76 @@
       <%= link_to "sample SNS", root_path, class: "header__top__title" %>
       <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "button logout" %>
     </div>
+    <div class="page-outer">
+      <div class="page-container">
+        <div class="content__left">
+          <div class="content__left__profile">
+            <div class="content__left__profile__image">
+            </div>
+            <div class="content__left__profile__bottom">
+            <div class="content__left__profile__bottom__detail">
+              <h1 class="content__left__profile__bottom__detail__name">名前</h1>
+              <p class="content__left__profile__bottom__detail__introduction">
+                自己紹介文
+              </p>
+              <div class="content__left__profile__bottom__detail__joindate">
+                日付
+              </div>
+
+            </div>
+          </div>
+          </div>
+
+        </div>
+        <div class="content__right">
+          <div class="content__right__tweet">
+            <div class="content__right__tweet__tweet-box">
+              <form class="content__right__tweet__tweet-box__form">
+                <div class="content__right__tweet__tweet-box__form__text">
+                </div>
+                <div class="content__right__tweet__tweet-box__form__toolbar">
+                  <div class="content__right__tweet__tweet-box__form__toolbar__button">
+                    <input class="content__right__tweet__tweet-box__form__toolbar__button__send button" value="投稿する" type="submit"/>
+                    <div class="content__right__tweet__tweet-box__form__toolbar__button__image">
+                      <label class="image__icon">
+                        <i class="fa fa-camera"></i>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="content__right__line__container">
+              <div class="content__right__line">
+                <ol class="content__right__line__list">
+                  <li class="content__right__line__list__item">
+                    <div class="content__right__line__list__item__section">
+                      <div class="content__right__line__list__item__section__header">
+                        <div class="content__right__line__list__item__section__header__image">画
+
+                        </div>
+                        <div class="content__right__line__list__item__section__header__name">名前
+
+                        </div>
+                        <div class="content__right__line__list__item__section__header__time">投稿時間
+
+                        </div>
+                      </div>
+                      <div class="content__right__line__list__item__section__text">ツイート
+                      </div>
+                      <div class="content__right__line__list__item__section__image">写真
+                      </div>
+                      <div class="content__right__line__list__item__section__footer">footer
+                      </div>
+                    </div>
+                  </li>
+                </ol>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 </body>
