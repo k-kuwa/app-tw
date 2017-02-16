@@ -28,3 +28,5 @@ ja:
              password: パスワード
              password_confirmation: パスワード確認
              email: メールアドレス
+             image: プロフィール画像
+             text: プロフィールメッセージ

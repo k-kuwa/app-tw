@@ -71,7 +71,7 @@
     min-width: 650px;
 }
 
-.signup, .login, .logout, .mypage {
+.signup, .login, .logout, .mypage, .edit, .content__right__tweet__tweet-box__form__toolbar__button__send, .back {
     border-radius: 5px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     font-size: 16px;
@@ -80,7 +80,7 @@
     margin-left: 8px;
 }
 
-.signup:hover, .login:hover, .logout:hover, .mypage:hover {
+.signup:hover, .login:hover, .logout:hover, .mypage:hover, .edit:hover, .back:hover {
   background: #fff;
   color: #afa1a1;
 }
@@ -182,32 +182,55 @@
 }
 
 .main__timeline__contents__image {
-    height: 80px;
+    height: 100%;
     position: relative;
     width: 100%;
-    border: 1px solid #8f7a8d;
     margin-bottom: 10px;
+    overflow: auto;
+    border-radius: 4px;
 }
 
-.main__timeline__contents__user {
+.tweet-index-image{
+  display: block;
+  border-radius: 4px;
+}
+.main__timeline__contents__user:after {
     margin-bottom: 10px;
     position: relative;
-    height: 28px;
     margin-left: 0;
     margin-right: 5px;
     width: 100%;
-    border: 1px solid #4e9f91;
+    content: "";
+    clear: both;
+    display: block;
 }
 
+.main__timeline__contents__user__header__image {
+  height: 50px;
+  width: 50px;
+  overflow: auto;
+  float: left;
+}
+
+.userpage-link {
+  text-decoration: none;
+}
+
+.userpage-link:hover{
+  text-decoration: underline;
+}
 .main__timeline__contents__text {
   width: 100%;
-  height: 60px;
   margin-bottom: 10px;
-  border: 1px solid #70675c;
 }
 
 .main__timeline__contents__action {
   width: 100%;
-  height: 30px;
-  border: 1px solid #918882;
+  // height: 30px;
+  // border: 1px solid #918882;
+}
+
+.fa-mail-reply {
+  line-height: normal;
+  color: #808080;
 }

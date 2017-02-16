@@ -2,7 +2,105 @@
   <div class="header__top">
     <div class="header__top__button">
       <%= link_to "sample SNS", root_path, class: "header__top__title" %>
+      <% if user_signed_in? %>
+      <%= link_to "アカウント編集",  edit_user_registration_path, class: "button edit" %>
       <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "button logout" %>
+      <% else %>
+      <%= link_to "アカウント作成", new_user_registration_path, class: "button signup" %>
+      <%= link_to "ログイン", new_user_session_path, class: "button login"%>
+      <% end %>
     </div>
+      <div class="page-container">
+        <div class="content__left">
+          <div class="content__left__profile">
+            <div class="content__left__profile__image">
+              <% if @user.image.present? %>
+              <%= image_tag @user.image.url, class:"profile-image" %>
+              <% else %>
+              <p class="profile-no-image">
+              <%= image_tag 'user_image.jpg' %>
+              </p>
+              <% end %>
+            </div>
+            <div class="content__left__profile__bottom">
+            <div class="content__left__profile__bottom__detail">
+              <h1 class="content__left__profile__bottom__detail__name">
+                <%= @user.name %>
+              </h1>
+              <!-- <p class="content__left__profile__bottom__detail__introduction"> -->
+                <%= @user.text %>
+              </p>
+              <div class="content__left__profile__bottom__detail__joindate">
+                <%= @user.created_at %>に登録
+              </div>
+              <div class="content__left__profile__bottom__detail__edit">
+                プロフィール編集
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="content__right">
+          <div class="content__right__tweet">
+            <div class="content__right__tweet__tweet-box">
+                <%= form_for @tweet, url: tweets_path, html: { method: :post, class: "content__right__tweet__tweet-box__form"} do |f| %>
+                <div class="content__right__tweet__tweet-box__form__text">
+                  <%= f.text_area :text, maxlength:140, placeholder:"140文字以内", autofocus: true %>
+                </div>
+                <div class="content__right__tweet__tweet-box__form__toolbar">
+                  <div class="content__right__tweet__tweet-box__form__toolbar__button">
+                    <%= f.submit "投稿する", class: "content__right__tweet__tweet-box__form__toolbar__button__send button" %>
+                    <div class="content__right__tweet__tweet-box__form__toolbar__button__image">
+                      <label class="image__icon">
+                        <i class="fa fa-camera">
+                          <%= f.file_field :image, class:"image-file-field" %>
+                        </i>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="content__right__line__container">
+              <div class="content__right__line">
+                <ol class="content__right__line__list">
+                  <% @tweets.each do |tweet| %>
+                  <li class="content__right__line__list__item">
+                    <div class="content__right__line__list__item__section">
+                      <div class="content__right__line__list__item__section__header">
+                        <div class="content__right__line__list__item__section__header__image">
+                          <% if @user.image.present? %>
+                          <%= image_tag @user.image.thumb.url, class:"profile-thumb" %>
+                          <% else %>
+                          <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
+                          <% end %>
+                        </div>
+                        <div class="content__right__line__list__item__section__header__info">
+                        <div class="content__right__line__list__item__section__header__name"><%= @user.name %>
+                        </div>
+                        <div class="content__right__line__list__item__section__header__time"><%= tweet.created_at %>
+                        </div>
+                      </div>
+                      </div>
+                      <div class="content__right__line__list__item__section__text"><%= tweet.text %>
+                      </div>
+                      <div class="content__right__line__list__item__section__image">
+                        <%= image_tag tweet.image, class:"tweet-index-image" %>
+                      </div>
+                      <div class="content__right__line__list__item__section__footer">
+                        <a class="tweet-replay">
+                          <i class="fa fa-mail-reply">コメント</i>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <% end %>
+                </ol>
+            </div>
+          </div>
+
+        </div>
+      </div>
   </div>
 </body>

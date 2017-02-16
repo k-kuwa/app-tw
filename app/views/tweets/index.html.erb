@@ -25,32 +25,46 @@
       </div>
         <div class="main">
             <div class="main__timeline">
+              <% @tweets.each do |tweet|%>
+              <div class="main__timeline__contents__wrapper">
                 <div class="main__timeline__contents sample1">
+                  <% if tweet.image.present? %>
                       <div class="main__timeline__contents__image">
-                        画像
+                        <%= image_tag tweet.image.index.url, class:"tweet-index-image" %>
                       </div>
+                      <% end %>
                       <div class="main__timeline__contents__user">
-                        <a class="user__header">
-                          <image>画
-                          </image>
-                          <strong class="username">
-                            ユーザー名
-                          </strong>
-                        </a>
-                        <small class="time">日付
-                        </small>
+                        <div class="main__timeline__contents__user__header">
+                          <div class="main__timeline__contents__user__header__image">
+                            <% if tweet.user.image.present? %>
+                            <%= image_tag tweet.user.image.thumb.url, class:"profile-thumb" %>
+                            <% else %>
+                            <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
+                            <% end %>
+                          </div>
+                          <div class="main__timeline__contents__user__header__info">
+                          <div class="main__timeline__contents__user__header__name">
+                            <a class="userpage-link" href="/users/<%= tweet.user_id %>">
+                            <%= tweet.user.name %>
+                            </a>
+                          </div>
+                        <div class="main__timeline__contents__user__header__time">
+                          <%= tweet.created_at %>
+                        </div>
+                      </div>
+                    </div>
                       </div>
                       <div class="main__timeline__contents__text">
-                        テキスト
+                        <%= tweet.text%>
                       </div>
                       <div class="main__timeline__contents__action">
-                         返信　いいね
+                        <a class="tweet-replay">
+                          <i class="fa fa-mail-reply">コメント</i>
+                        </a>
                       </div>
                 </div>
-                <div class="main__timeline__contents sample2">
-                </div>
-                <div class="main__timeline__contents sample3">
-                </div>
+              </div>
+                <% end %>
             </div>
         </div>
         <div class="footer"></div>
