@@ -10,9 +10,9 @@ class ProfileUploader < CarrierWave::Uploader::Base
 
  # Choose what kind of storage to use for this uploader:
  case Rails.env
-   # when 'production'
-   #   storage :fog
-   when 'development'
+   when 'production'
+     storage :fog
+   when 'development' #S3に保存テストする場合はここをfogにする。
      storage :file
    when 'test'
      storage :file

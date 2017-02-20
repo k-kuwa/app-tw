@@ -1,0 +1,44 @@
+.page-comment-container {
+    padding: 56px 14px 15px;
+    position: relative;
+    margin: 0 auto;
+    min-height: 0;
+    width: 620px;
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+.content__right__tweet__detail__container {
+    margin-bottom: 25px;
+}
+
+.content__right__tweet__detail__list__item__section {
+    background-color: #fff;
+    border-bottom: 1px solid #e1e8ed;
+    cursor: pointer;
+    position: relative;
+    min-height: 51px;
+    padding: 9px 12px;
+    text-align: inherit;
+    content: " ";
+    display: table;
+    clear: both;
+    width: 96%;
+    border-radius: 4px;
+    box-shadow: 7px 7px 7px rgba(#525252, 0.4);
+}
+
+.content__right__tweet__detail__list__item__section__header__name {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: normal;
+}
+
+.content__right__tweet__detail__list__item__section__text {
+    font-size: 22px;
+    width: 97%;
+    margin: 10px 0;
+    line-height: normal;
+    padding-left: 10px;
+}
