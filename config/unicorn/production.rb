@@ -1,14 +1,14 @@
-#ワーカーの数。後述
+# ワーカーの数。後述
   $worker  = 2
-#何秒経過すればワーカーを削除するのかを決める
+# 何秒経過すればワーカーを削除するのかを決める
   $timeout = 30
-#自分のアプリケーション名、currentがつくことに注意。
+# 自分のアプリケーション名、currentがつくことに注意。
   $app_dir = "/var/www/app-tw/current"
-#リクエストを受け取るポート番号を指定。後述
+# リクエストを受け取るポート番号を指定。後述
   $listen  = File.expand_path 'tmp/sockets/.unicorn.sock', $app_dir
-#PIDの管理ファイルディレクトリ
+# PIDの管理ファイルディレクトリ
   $pid     = File.expand_path 'tmp/pids/unicorn.pid', $app_dir
-#エラーログを吐き出すファイルのディレクトリ
+# エラーログを吐き出すファイルのディレクトリ
   $std_log = File.expand_path 'log/unicorn.log', $app_dir
 
 # 上記で設定したものが適応されるよう定義
@@ -20,10 +20,10 @@
   listen  $listen
   pid $pid
 
-#ホットデプロイをするかしないかを設定
+# ホットデプロイをするかしないかを設定
   preload_app true
 
-#fork前に行うことを定義。後述
+# fork前に行うことを定義。後述
   before_fork do |server, worker|
     defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
     old_pid = "#{server.config[:pid]}.oldbin"
@@ -35,7 +35,7 @@
     end
   end
 
-#fork後に行うことを定義。後述
+# fork後に行うことを定義。後述
   after_fork do |server, worker|
     defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
   end
