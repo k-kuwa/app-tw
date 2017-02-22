@@ -1,4 +1,6 @@
 server '13.113.0.184', user: 'ec2-user', roles: %w{app db web}
+
+set :ssh_options, keys: '~/.ssh/hartkey.pem'
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
