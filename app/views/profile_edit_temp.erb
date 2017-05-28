@@ -1,0 +1,37 @@
+<!-- devise default edit -->
+
+<div class="form__field">
+    <%= f.label :email %><br/>
+    <i>(プロフィールには表示されません)</i><br/>
+    <%= f.email_field :email, autofocus: true %>
+</div>
+<% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+<div>Currently waiting confirmation for:
+    <%= resource.unconfirmed_email %></div>
+<% end %>
+
+<div class="form__field">
+    <%= f.label :password %>
+    <i>(変更しない場合は空欄のまま)</i><br/>
+    <%= f.password_field :password, placeholder:"6文字以上", autocomplete: "off" %>
+    <% if @minimum_password_length %>
+    <br/>
+    <em><%= @minimum_password_length %>
+        characters minimum</em>
+    <% end %>
+</div>
+
+<div class="form__field">
+    <%= f.label :password_confirmation %><br/>
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+</div>
+
+<div class="form__field">
+    <%= f.label :current_password %>
+    <i>(更新のため現在のパスワードを入力してください)</i><br/>
+    <%= f.password_field :current_password, placeholder:"現在のパスワードを入力", autocomplete: "off" %>
+</div>
+<h3>Cancel my account</h3>
+<p>Unhappy?
+    <%= button_to "アカウントを削除する", registration_path(resource_name), data: { confirm: "本当によろしですか？" }, method: :delete %></p>
+    <%= link_to "戻る", :back %>

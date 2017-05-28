@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>sample SNS</title>
-    <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<head>
+  <title><%= yield :title %></title>
+  <%= csrf_meta_tags %>
+  <%= display_meta_tags({
+    :title => "sample SNS" ,
+    :viewport => "width=device-width, user-scalable=no" ,
+    })%>
+    <%= stylesheet_link_tag    'application', media: 'all'%>
+    <%= javascript_include_tag 'application' %>
   </head>
-
   <body>
-    <p class="notice">
-      <%= notice %>
-    </p>
-    <p class="alert">
-      <%= alert %>
-    </p>
-    <%= yield %>
-  </body>
+    <div class="pc-notice">
+      <div class="app-name">
+        sample SNS
+      </div>
+      <p class="guide">
+        恐れ入りますがスマートフォンで<br />
+        ご利用ください。
+      </p>
+    </div>
+    <!-- <p class="notice">
+    <%= notice %>
+  </p>
+  <p class="alert">
+  <%= alert %>
+</p> -->
+<%= yield %>
+</body>
 </html>

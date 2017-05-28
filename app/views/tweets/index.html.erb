@@ -1,80 +1,104 @@
+<% content_for :title do %>
+ホーム/samplel SNS
+<% end %>
 <body class="document">
-    <div class="header">
-        <div class="header__top">
-            <div class="header__top__button">
-                <%= link_to "sample SNS", root_path, class: "header__top__title" %>
-                <% if user_signed_in? %>
-                <a class="button mypage", href="/users/<%= current_user.id %>">マイページ</a>
-                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "button logout" %>
-                <% else %>
-                <%= link_to "アカウント作成", new_user_registration_path, class: "button signup" %>
-                <%= link_to "ログイン", new_user_session_path, class: "button login"%>
-                <% end %>
-            </div>
+  <div class="post-form-content">
+    <div class="post-form-area">
+      <%= form_for @tweet, url: tweets_path, html: { method: :post, class: "post-form-box"} do |f| %>
+      <div class="form-user-info cf">
+        <div class="form-user-info-img">
         </div>
-        <!-- <div class="header__search">
-            <form class="header__search__form">
-                <div class="formarea">
-                    <input class="form-input" type="text" id="search-name" placeholder="ユーザー名を入力してください"/>
-                    <button type="submit" class="icon icon--search">
-                      <i class="fa fa-search"></i>
-                    </button>
-                </div>
-            </form>
-        </div> -->
+        <div class="cansel-button">
+          <%= fa_icon "window-close 3x color" %>
+        </div>
       </div>
-        <div class="main">
-            <div class="main__timeline">
-              <% @tweets.each do |tweet|%>
-              <div class="main__timeline__contents__wrapper">
-                <div class="main__timeline__contents sample1">
-                  <% if tweet.image.present? %>
-                      <div class="main__timeline__contents__image">
-                        <%= image_tag tweet.image.index.url, class:"tweet-index-image" %>
-                      </div>
-                      <% end %>
-                      <div class="main__timeline__contents__user">
-                        <div class="main__timeline__contents__user__header">
-                          <div class="main__timeline__contents__user__header__image">
-                            <% if tweet.user.image.present? %>
-                            <%= image_tag tweet.user.image.thumb.url, class:"profile-thumb" %>
-                            <% else %>
-                            <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
-                            <% end %>
-                          </div>
-                          <div class="main__timeline__contents__user__header__info">
-                          <div class="main__timeline__contents__user__header__name">
-                            <a class="userpage-link" href="/users/<%= tweet.user_id %>">
-                            <%= tweet.user.name %>
-                            </a>
-                          </div>
-                        <div class="main__timeline__contents__user__header__time">
-                          <%= tweet.created_at %>
-                        </div>
-                      </div>
-                    </div>
-                      </div>
-                      <div class="main__timeline__contents__text">
-                        <%= tweet.text%>
-                      </div>
-                      <div class="main__timeline__contents__action">
-                        <% if user_signed_in? %>
-                        <a class="tweet-replay" href="/tweets/<%= tweet.id %>">
-                          <i class="fa fa-mail-reply">コメント</i>
-                        </a>
-                        <% else %>
-                        <a class="tweet-replay" href="/users/sign_in">
-                          <i class="fa fa-mail-reply">コメント</i>
-                        </a>
-                        <%end%>
-                        <% if user_signed_in? && current_user.id == tweet.user.id %>
-                        <%= link_to '削除', "/tweets/#{tweet.id}",method: :delete, class:"tweet-destroy" %>
-                        <% end %>
-                      </div>
-                </div>
-              </div>
-                <% end %>
-            </div>
+      <div class="post-form-box-text">
+        <%= f.text_area :text, maxlength:140, placeholder:"140文字以内", autofocus: true %>
+      </div>
+      <div class="post-form-box-toolbar cf">
+        <div class="post-form-box-toolbar-button">
+          <%= f.submit "投稿", class: "post-form-box-toolbar-button-send" %>
         </div>
-        <div class="footer"></div>
-    </body>
+        <div class="post-form-box-toolbar-button-image">
+          <label class="image-icon" for="tweet_image">
+            <%= fa_icon "camera 4x color" %>
+            <span class="change-image">画像を選択</span>
+          </label>
+          <%= f.file_field :image, class:"image-file-field" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="selected-image">
+    </div>
+  </div>
+  <%= render partial: 'shared/header', locals: { tweets: @tweets } %>
+  <div class="main">
+    <div class="post-button">
+      <div class="post-content-wrap cf">
+        <div class="user-image">
+          <% if current_user.image.present? %>
+          <%= image_tag current_user.image.thumb.url, class:"profile-thumb" %>
+          <% else %>
+          <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
+          <% end %>
+        </div>
+        <div class="post-text">
+          <p>投稿する</p>
+        </div>
+        <div class="post-icon">
+          <%= fa_icon "pencil 4x color" %>
+        </div>
+      </div>
+    </div>
+    <% @tweets.each do |tweet|%>
+    <div class="main-timeline">
+      <div class="main-timeline-contents-wrapper">
+        <div class="main-timeline-contents sample1">
+          <div class="main-timeline-contents-user cf">
+            <div class="main-timeline-contents-user-header">
+              <div class="main-timeline-contents-user-header-image">
+                <% if tweet.user.image.present? %>
+                <%= image_tag tweet.user.image.thumb.url, class:"profile-thumb" %>
+                <% else %>
+                <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
+                <% end %>
+              </div>
+              <div class="main-timeline-contents-user-header-name">
+                <a class="userpage-link" href="/users/<%= tweet.user_id %>">
+                  <%= tweet.user.name %>
+                </a>
+              </div>
+              <div class="main-timeline-contents-user-header-time">
+                <%= tweet.created_at %>
+              </div>
+            </div>
+          </div>
+          <div class="main-timeline-contents-text">
+            <%= simple_format(tweet.text)%>
+          </div>
+          <% if tweet.image.present? %>
+          <div class="main-timeline-contents-image">
+            <%= image_tag tweet.image.index.url, class:"tweet-index-image" %>
+          </div>
+          <% end %>
+          <div class="main-timeline-contents-action">
+            <%= link_to tweet_path(tweet.id), class: "tweet-replay" do %>
+            <%= fa_icon "reply 3x color" %>
+            <% end %>
+            <% if current_user.id == tweet.user.id %>
+            <%= link_to tweet_path(tweet.id), method: :delete, class:"tweet-destroy" do %>
+            <%= fa_icon "trash-o 3x color"%>
+            <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="footer"></div>
+  <div class="post-icon-fixed">
+    <%= fa_icon "pencil 4x color" %>
+  </div>
+</body>

@@ -1,120 +1,118 @@
+<% content_for :title do %>
+プロフィール/samplel SNS
+<% end %>
 <body class="document">
-    <div class="header__top">
-        <div class="header__top__button">
-            <%= link_to "sample SNS", root_path, class: "header__top__title" %>
-            <% if user_signed_in? && current_user.id == @user.id %>
-            <%= link_to "プロフィール編集",  edit_user_registration_path, class: "button edit" %>
-            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "button logout" %>
-            <% elsif user_signed_in? %>
-            <a class="button mypage" , href="/users/<%= current_user.id %>">マイページ</a>
-            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "button logout" %>
+  <%= render partial: 'shared/header', locals: { tweets: @tweets } %>
+  <div class="page-container">
+    <div class="content-profile">
+      <div class="content-profile-image">
+        <% if @user.image.present? %>
+        <%= image_tag @user.image.url, class:"profile-image" %>
         <% else %>
-            <%= link_to "アカウント作成", new_user_registration_path, class: "button signup" %>
-            <%= link_to "ログイン", new_user_session_path, class: "button login"%>
+        <%= image_tag 'prof_no_image.png', class:"profile-no-image" %>
+        <% end %>
+      </div>
+      <div class="content-profile-info">
+        <p class="content-profile-name">
+          <%= @user.name %>
+        </p>
+        <div class="content-profile-message">
+          <%= simple_format(@user.text) %>
+        </div>
+        <div class="content-profile-more cf">
+          <div class="content-profile-follow">
+            <table class="user-data-table">
+              <tr>
+                <th>投稿数</th>
+                <td><%= @user.tweets.count %></td>
+              </tr>
+              <tr>
+                <th>フォロー数</th>
+                <td><%= @user.following.count %></td>
+              </tr>
+              <tr>
+                <th>フォロワー数</th>
+                <td><%= @user.followers.count %></td>
+              </tr>
+            </table>
+          </div>
+          <div class="content-profile-edit">
+            <% if current_user.id == @user.id %>
+            <div class="profile-edit-button">
+              <%= link_to edit_user_registration_path, class: "profile-edit" do %>
+              <span>プロフィール編集</span>
+              <% end %>
+            </div>
             <% end %>
+            <% unless current_user.id == @user.id %>
+            <div class="profile-follow-botton">
+              <% if current_user.following?(@user) %>
+              <%= form_for(current_user.active_relationships.find_by(followed_id: @user.id), html: { method: :delete }) do |f| %>
+              <%= f.submit "フォローを解除する", class: "profile-unfollow-send" %>
+              <% end %>
+              <% else %>
+              <%= form_for(current_user.active_relationships.build) do |f| %>
+              <div><%= hidden_field_tag :followed_id, @user.id %></div>
+              <%= f.submit "フォローする", class: "profile-follow-send" %>
+              <% end %>
+              <% end %>
+            </div>
+            <% end %>
+          </div>
         </div>
+      </div>
     </div>
-        <div class="page-container">
-            <div class="content__left">
-                <div class="content__left__profile">
-                    <div class="content__left__profile__image">
-                        <% if @user.image.present? %>
-                        <%= image_tag @user.image.url, class:"profile-image" %>
-                    <% else %>
-                        <p class="profile-no-image">
-                            <%= image_tag 'user_image.jpg' %>
-                        </p>
-                        <% end %>
-                    </div>
-                    <div class="content__left__profile__bottom">
-                        <div class="content__left__profile__bottom__detail">
-                            <h1 class="content__left__profile__bottom__detail__name">
-                                <%= @user.name %>
-                            </h1>
-                            <%= @user.text %>
-                            <div class="content__left__profile__bottom__detail__joindate">
-                                <%= @user.created_at %>に登録
-                            </div>
-                            <div class="content__left__profile__bottom__detail__edit">
-                              <% if user_signed_in? && current_user.id == @user.id %>
-                              <%= link_to "プロフィール編集",  edit_user_registration_path, class: "profile-edit" %>
-                              <% end %>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="content__right">
-                <% if user_signed_in? && current_user.id == @user.id %>
-                <div class="content__right__tweet">
-                    <div class="content__right__tweet__tweet-box">
-                        <%= form_for @tweet, url: tweets_path, html: { method: :post, class: "content__right__tweet__tweet-box__form"} do |f| %>
-                        <div class="content__right__tweet__tweet-box__form__text">
-                            <%= f.text_area :text, maxlength:140, placeholder:"140文字以内", autofocus: true %>
-                        </div>
-                        <div class="content__right__tweet__tweet-box__form__toolbar">
-                            <div class="content__right__tweet__tweet-box__form__toolbar__button">
-                                <%= f.submit "投稿する", class: "content__right__tweet__tweet-box__form__toolbar__button__send button" %>
-                                <div class="content__right__tweet__tweet-box__form__toolbar__button__image">
-                                    <label class="image__icon">
-                                        <i class="fa fa-camera">
-                                            <%= f.file_field :image, class:"image-file-field" %>
-                                        </i>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <% end %>
-                    </div>
-                </div>
+    <div class="main__timeline">
+      <div class="main-timeline-contents-wrapper">
+        <h2>投稿一覧</h2>
+        <% @tweets.each do |tweet|%>
+        <div class="main-timeline-contents sample1">
+          <div class="main-timeline-contents-user cf">
+            <div class="main-timeline-contents-user-header">
+              <div class="main-timeline-contents-user-header-image">
+                <% if tweet.user.image.present? %>
+                <%= image_tag tweet.user.image.thumb.url, class:"profile-thumb" %>
+                <% else %>
+                <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
                 <% end %>
-                <div class="content__right__line__container">
-                    <div class="content__right__line">
-                        <ol class="content__right__line__list">
-                            <% @tweets.each do |tweet| %>
-                            <li class="content__right__line__list__item">
-                                <div class="content__right__line__list__item__section">
-                                    <div class="content__right__line__list__item__section__header">
-                                        <div class="content__right__line__list__item__section__header__image">
-                                            <% if @user.image.present? %>
-                                            <%= image_tag @user.image.thumb.url, class:"profile-thumb" %>
-                                        <% else %>
-                                            <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
-                                            <% end %>
-                                        </div>
-                                        <div class="content__right__line__list__item__section__header__info">
-                                            <div class="content__right__line__list__item__section__header__name"><%= @user.name %>
-                                            </div>
-                                            <div class="content__right__line__list__item__section__header__time"><%= tweet.created_at %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="content__right__line__list__item__section__text"><%= tweet.text %>
-                                    </div>
-                                    <div class="content__right__line__list__item__section__image">
-                                        <%= image_tag tweet.image, class:"tweet-index-image" %>
-                                    </div>
-                                    <div class="content__right__line__list__item__section__footer">
-                                        <% if user_signed_in? %>
-                                        <a class="tweet-replay" href="/tweets/<%= tweet.id %>">
-                                            <i class="fa fa-mail-reply">コメント</i>
-                                        </a>
-                                    <% else %>
-                                        <a class="tweet-replay" href="/users/sign_in">
-                                            <i class="fa fa-mail-reply">コメント</i>
-                                        </a>
-                                        <%end%>
-                                        <% if user_signed_in? && current_user.id == tweet.user.id %>
-                                        <%= link_to '削除', "/tweets/#{tweet.id}",method: :delete, class:"tweet-destroy" %>
-                                        <% end %>
-                                    </div>
-                                </div>
-                            </li>
-                            <% end %>
-                        </ol>
-                    </div>
-                </div>
+              </div>
+              <div class="main-timeline-contents-user-header-name">
+                <a class="userpage-link" href="/users/<%= tweet.user_id %>">
+                  <%= tweet.user.name %>
+                </a>
+              </div>
+              <div class="main-timeline-contents-user-header-time">
+                <%= tweet.created_at %>
+              </div>
             </div>
+          </div>
+          <div class="main-timeline-contents-text">
+            <%= tweet.text%>
+          </div>
+          <% if tweet.image.present? %>
+          <div class="main-timeline-contents-image">
+            <%= image_tag tweet.image.index.url, class:"tweet-index-image" %>
+          </div>
+          <% end %>
+          <div class="main-timeline-contents-action">
+            <% if user_signed_in? %>
+            <a class="tweet-replay" href="/tweets/<%= tweet.id %>">
+              <%= fa_icon "reply 3x color" %>
+            </a>
+            <% else %>
+            <a class="tweet-replay" href="/users/sign_in">
+              <%= fa_icon "reply 3x color" %>
+            </a>
+            <%end%>
+            <% if user_signed_in? && current_user.id == tweet.user.id %>
+            <%= link_to "/tweets/#{tweet.id}",method: :delete, class:"tweet-destroy" do %>
+            <%= fa_icon "trash-o 3x color"%>
+            <% end %>
+            <% end %>
+          </div>
         </div>
-    <!-- </div> -->
+      </div>
+      <% end %>
+    </div>
+  </div>
 </body>

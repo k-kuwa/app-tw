@@ -1,0 +1,181 @@
+@media only screen and (min-width: 960px) {
+
+}
+
+//スマホ用CSS
+@media only screen and (max-width: 959px) {
+
+  .user-new-content{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: #9cc76d;
+  }
+
+  .user-new-content p {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+    height: 50px;
+  }
+  .app-name1, .app-name2{
+    color: #fff;
+    font-size: 3.5rem;
+    width: 200px;
+    height: 60px;
+  }
+
+  .app-name1 {
+    top: 20%;
+  }
+
+  .app-name2 {
+    top: 30%;
+  }
+
+  .signup-new p, .login-new p {
+    background-color: #fff;
+    color: #9cc76d;
+    width: 60%;
+    line-height: 50px;
+    font-size: 1.8rem;
+    border-radius: 5px;
+  }
+
+  .signup-new p {
+    bottom: 110px;
+  }
+
+  .login-new p {
+    bottom: 40px;
+  }
+
+
+  .page-container {
+    margin-top: 65px;
+  }
+
+  .content-profile {
+    position: relative;
+    width: 96%;
+    margin: 10px auto;
+    background-color: #fff;
+  }
+
+  .content-profile-image {
+    width: 100%;
+    height: 175px;
+    background-color: #98b5cc;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .profile-image {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+
+  .profile-no-image {
+    min-width: 100%;
+    min-height: 175px;
+  }
+
+  .content-profile-info {
+    width: 100%;
+  }
+
+  .content-profile-name {
+    width: 100%;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: black;
+  }
+
+  .content-profile-message {
+    width: 90%;
+    font-size: 1.3rem;
+    margin: 0 auto 10px auto;
+  }
+
+  .content-profile-more {
+    width: 100%;
+    height: 85px;
+    padding-bottom: 5px;
+  }
+
+  .content-profile-follow {
+    width: 50%;
+    height: 100%;
+    float: left;
+  }
+
+  .user-data-table {
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+    font-size: 1.2rem;
+  }
+
+  .user-data-table th {
+    color: #979895;
+  }
+
+  .content-profile-edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    float: right;
+  }
+
+  .profile-edit-button, .profile-follow-botton {
+    width: 80%;
+    height: 75%;
+    background-color: #9cc76d;
+    border-radius: 5px;
+  }
+
+  .profile-follow-botton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #cface6;
+  }
+
+  .profile-edit-button a {
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+
+  .profile-edit-button a span,
+  .profile-unfollow-send,
+  .profile-follow-send{
+    color: #fff;
+    font-size: 1.4rem;
+  }
+
+  .main-timeline-contents-wrapper h2 {
+    width: 96%;
+    height: 50px;
+    margin: 0 auto 10px auto;
+    text-align: center;
+    line-height: 50px;
+    font-size: 1.6rem;
+  }
+
+}

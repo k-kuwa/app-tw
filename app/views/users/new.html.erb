@@ -1,0 +1,15 @@
+<% content_for :title do %>
+ユーザー認証/samplel SNS
+<% end %>
+<body class="document">
+  <div class="user-new-content">
+    <p class="app-name1">sample</p>
+    <p class="app-name2">SNS</p>
+    <%= link_to new_user_registration_path, class: "signup-new" do %>
+    <p>新規登録</p>
+    <% end %>
+    <%= link_to new_user_session_path, class: "login-new" do %>
+    <p>ログイン</p>
+    <% end %>
+  </div>
+</body>
