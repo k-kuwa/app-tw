@@ -1,122 +1,158 @@
+<% content_for :title do %>
+投稿詳細/samplel SNS
+<% end %>
 <body class="document">
-    <div class="header__top">
-        <div class="header__top__button">
-            <%= link_to "sample SNS", root_path, class: "header__top__title" %>
+  <div class="comment-form-content">
+    <div class="comment-form-area">
+      <%= form_for @comment, url: "/tweets/#{@tweet.id}/comments", html: { method: :post, class: "comment__form__box"} do |f| %>
+      <div class="form-user-info cf">
+        <div class="form-comment-to">
+          <p>
+            <%=@tweet.user.name %>さんへコメント
+          </p>
+        </div>
+        <div class="cansel-button">
+          <%= fa_icon "window-close 3x color" %>
+        </div>
+      </div>
+      <div class="comment-form-box-text">
+        <%= f.text_area :text, maxlength:140, placeholder:"140文字以内", autofocus: true %>
+      </div>
+      <div class="comment-form-box-toolbar cf">
+        <div class="comment-form-box-toolbar-button">
+          <%= f.submit "コメント", class: "comment-form-box-toolbar-button-send" %>
+        </div>
+        <div class="comment-form-box-toolbar-button-image">
+          <label class="image-icon" for="comment_image">
+            <%= fa_icon "camera 4x color" %>
+            <span class="change-image">画像を選択</span>
+          </label>
+          <%= f.file_field :image, class:"image-file-field" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="selected-image">
+    </div>
+  </div>
+  <%= render partial: 'shared/header', locals: { tweets: @tweets } %>
+  <div class="page-comment-container">
+    <div class="main-tweet-detail">
+      <div class="main-timeline-contents-wrapper">
+        <div class="main-timeline-contents">
+          <div class="main-timeline-contents-user cf">
+            <div class="main-timeline-contents-user-header">
+              <div class="main-timeline-contents-user-header-image">
+                <% if @tweet.user.image.present? %>
+                <%= image_tag @tweet.user.image.thumb.url, class:"profile-thumb" %>
+                <% else %>
+                <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
+                <% end %>
+              </div>
+              <div class="main-timeline-contents-user-header-name">
+                <a class="userpage-link" href="/users/<%= @tweet.user_id %>">
+                  <%= @tweet.user.name %>
+                </a>
+              </div>
+              <div class="main-timeline-contents-user-header-time">
+                <%= @tweet.created_at %>
+              </div>
+            </div>
+          </div>
+          <div class="main-timeline-contents-text">
+            <%= simple_format(@tweet.text)%>
+          </div>
+          <% if @tweet.image.present? %>
+          <div class="main-timeline-contents-image">
+            <%= image_tag @tweet.image.index.url, class:"tweet-index-image" %>
+          </div>
+          <% end %>
+          <div class="main-timeline-contents-action ">
             <% if user_signed_in? %>
-            <%= link_to "アカウント編集",  edit_user_registration_path, class: "button edit" %>
-            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "button logout" %>
-        <% else %>
-            <%= link_to "アカウント作成", new_user_registration_path, class: "button signup" %>
-            <%= link_to "ログイン", new_user_session_path, class: "button login"%>
+            <a class="tweet-replay" href="/tweets/<%= @tweet.id %>">
+              <%= fa_icon "reply 3x color" %>
+            </a>
+            <% else %>
+            <a class="tweet-replay" href="/users/sign_in">
+              <%= fa_icon "reply 3x color" %>
+            </a>
+            <%end%>
+            <% if current_user.id == @tweet.user.id %>
+            <%= link_to tweet_path, method: :delete, class:"tweet-destroy" do %>
+            <%= fa_icon "trash-o 3x color"%>
             <% end %>
+            <% end %>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="page-comment-container">
-        <div class="content__right">
-            <div class="content__right__tweet__detail__container">
-                <div class="content__right__tweet__detail">
-                    <ol class="content__right__line__list">
-                        <li class="content__right__line__list__item">
-                            <div class="content__right__tweet__detail__list__item__section">
-                                <div class="content__right__line__list__item__section__header">
-                                    <div class="content__right__line__list__item__section__header__image">
-                                        <% if @tweet.user.image.present? %>
-                                        <%= image_tag @tweet.user.image.thumb.url, class:"profile-thumb" %>
-                                    <% else %>
-                                        <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
-                                        <% end %>
-                                    </div>
-                                    <div class="content__right__line__list__item__section__header__info">
-                                        <div class="content__right__tweet__detail__list__item__section__header__name">
-                                            <%= @tweet.user.name %>
-                                        </div>
-                                        <div class="content__right__line__list__item__section__header__time">
-                                            <%= @tweet.created_at %>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="content__right__tweet__detail__list__item__section__text">
-                                    <p>
-                                        <%= @tweet.text %>
-                                    </p>
-                                </div>
-                                <div class="content__right__line__list__item__section__image">
-                                    <%= image_tag @tweet.image, class:"tweet-index-image" %>
-                                </div>
-                                <div class="content__right__line__list__item__section__footer">
-                                    <a class="tweet-replay">
-                                        <i class="fa fa-mail-reply">コメント</i>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                    </ol>
-                </div>
-            </div>
-            <div class="content__right__tweet">
-                <div class="content__right__tweet__tweet-box">
-                    <%= form_for @comment, url: "/tweets/#{@tweet.id}/comments", html: { method: :post, class: "content__right__tweet__tweet-box__form"} do |f| %>
-                    <div class="content__right__tweet__tweet-box__form__text">
-                        <%= f.text_area :text, maxlength:140, placeholder:"140文字以内", autofocus: true %>
-                    </div>
-                    <div class="content__right__tweet__tweet-box__form__toolbar">
-                        <div class="content__right__tweet__tweet-box__form__toolbar__button">
-                            <%= f.submit "コメント", class: "content__right__tweet__tweet-box__form__toolbar__button__send button" %>
-                            <div class="content__right__tweet__tweet-box__form__toolbar__button__image">
-                                <label class="image__icon">
-                                    <i class="fa fa-camera">
-                                        <%= f.file_field :image, class:"image-file-field" %>
-                                    </i>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+    <div class="main-comment-detail">
+      <div class="main-timeline-contents-wrapper">
+        <h2>コメント一覧</h2>
+        <ul class="comment-list">
+          <% @comments.each do |comment| %>
+          <li>
+            <div class="main-timeline-contents">
+              <div class="main-timeline-contents-user cf">
+                <div class="main-timeline-contents-user-header">
+                  <div class="main-timeline-contents-user-header-image">
+                    <% if comment.user.image.present? %>
+                    <%= image_tag comment.user.image.thumb.url, class:"profile-thumb" %>
+                    <% else %>
+                    <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
                     <% end %>
+                  </div>
+                  <div class="main-timeline-contents-user-header-name">
+                    <a class="userpage-link" href="/users/<%= @tweet.user_id %>">
+                      <%= comment.user.name %>
+                    </a>
+                  </div>
+                  <div class="main-timeline-contents-user-header-time">
+                    <%= comment.created_at %>
+                  </div>
                 </div>
+              </div>
+              <div class="main-timeline-contents-text">
+                <%= simple_format(comment.text)%>
+              </div>
+              <% if comment.image.present? %>
+              <div class="main-timeline-contents-image">
+                <%= image_tag comment.image.url, class:"comment-image" %>
+              </div>
+              <% end %>
+              <div class="main-timeline-contents-action">
+                <a class="tweet-replay" href="/tweets/<%= @tweet.id %>">
+                  <%= fa_icon "reply 3x color" %>
+                </a>
+                <% if current_user.id == comment.user.id %>
+                <%= link_to "/tweets/#{comment.tweet.id}/comments/#{comment.id}",method: :delete, class:"comment-destroy" do %>
+                <%= fa_icon "trash 3x color"%>
+                <% end %>
+                <% end %>
+              </div>
             </div>
-            <div class="content__right__line__container">
-                <div class="content__right__line">
-                    <ol class="content__right__line__list">
-                        <% @comments.each do |comment| %>
-                        <li class="content__right__line__list__item">
-                            <div class="content__right__line__list__item__section">
-                                <div class="content__right__line__list__item__section__header">
-                                    <div class="content__right__line__list__item__section__header__image">
-                                        <% if comment.user.image.present? %>
-                                        <%= image_tag comment.user.image.thumb.url, class:"profile-thumb" %>
-                                    <% else %>
-                                        <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
-                                        <% end %>
-                                    </div>
-                                    <div class="content__right__line__list__item__section__header__info">
-                                        <div class="content__right__line__list__item__section__header__name">
-                                            <%= comment.user.name %>
-                                        </div>
-                                        <div class="content__right__line__list__item__section__header__time">
-                                            <%= comment.created_at %>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="content__right__line__list__item__section__text">
-                                    <%= comment.text %>
-                                </div>
-                                <div class="content__right__line__list__item__section__image">
-                                    <%= image_tag comment.image, class:"comment-image" %>
-                                </div>
-                                <div class="content__right__line__list__item__section__footer">
-                                    <a class="tweet-replay">
-                                        <i class="fa fa-mail-reply">コメント</i>
-                                    </a>
-                                    <% if user_signed_in? && current_user.id == comment.user.id %>
-                                    <%= link_to '削除', "/tweets/#{comment.tweet.id}/comments/#{comment.id}",method: :delete, class:"comment-destroy" %>
-                                    <% end %>
-                                </div>
-                            </div>
-                        </li>
-                        <% end %>
-                    </ol>
-                </div>
-            </div>
-        </div>
+          </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-</body>
+    <div class="comment-button">
+      <div class="comment-content-wrap cf">
+        <div class="user-image">
+          <% if current_user.image.present? %>
+          <%= image_tag current_user.image.thumb.url, class:"profile-thumb" %>
+          <% else %>
+          <%= image_tag 'user_image.jpg', class:"profile-thumb-no-image" %>
+          <% end %>
+        </div>
+        <div class="comment-text">
+          <p>コメントする</p>
+        </div>
+        <div class="comment-icon">
+          <%= fa_icon "commenting 4x color" %>
+        </div>
+      </div>
+    </div>
+    <div class="modal-overlay">
+    </div>
+  </body>

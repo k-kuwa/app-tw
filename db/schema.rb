@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170217032938) do
+ActiveRecord::Schema.define(version: 20170523104458) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "text",       limit: 140, null: false
+    t.string   "text",       limit: 140
     t.string   "image"
     t.integer  "tweet_id"
     t.integer  "user_id"
@@ -21,8 +21,18 @@ ActiveRecord::Schema.define(version: 20170217032938) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
+    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
+    t.index ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+  end
+
   create_table "tweets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "text",       limit: 140, null: false
+    t.string   "text",       limit: 140
     t.string   "image"
     t.integer  "user_id",                null: false
     t.datetime "created_at",             null: false
